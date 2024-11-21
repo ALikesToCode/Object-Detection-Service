@@ -14,7 +14,8 @@ else:
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format='[%(asctime)s] [%(process)d] [%(levelname)s] %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S %z'
 )
 logger = logging.getLogger(__name__)
 
@@ -99,4 +100,6 @@ if __name__ == '__main__':
     env = os.getenv('FLASK_ENV', 'production')
     logger.info(f"Starting UI service in {env} mode")
     logger.info(f"AI Service URL configured as: {AI_SERVICE_URL}")
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    
+    debug_mode = env == 'development'
+    app.run(host='0.0.0.0', port=5000, debug=debug_mode)

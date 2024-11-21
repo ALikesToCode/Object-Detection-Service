@@ -10,11 +10,11 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt gunicorn
 
 COPY . .
 
 RUN mkdir -p uploads && \
     chmod 777 uploads
 
-CMD ["python", "app.py"] 
+CMD ["gunicorn", "--bind", "0.0.0.0:5001", "app:app", "--workers", "4"] 

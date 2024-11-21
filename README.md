@@ -10,7 +10,7 @@ A modern microservice-based object detection system using YOLOv8 and Flask. The 
 - Image preview and fullscreen view
 - Download detected images
 - JSON output of detections
-- Docker support for easy deployment
+- Production-ready Docker deployment with Gunicorn
 - Development environment setup
 
 ## Prerequisites
@@ -21,7 +21,7 @@ A modern microservice-based object detection system using YOLOv8 and Flask. The 
 
 ## Quick Start
 
-### Using Docker
+### Production Deployment
 
 1. Clone the repository:
 ```bash
@@ -29,16 +29,27 @@ git clone https://github.com/ALikesToCode/Object-Detection-Service-AIMONK/
 cd Object-Detection-Service-AIMONK
 ```
 
-2. Build and run services:
+2. Start services in production mode:
 ```bash
-docker-compose up --build
+chmod +x start_prod.sh
+./start_prod.sh
 ```
 
 3. Access the application at: http://localhost:5000
 
-### Local Development
+To view logs:
+```bash
+docker-compose logs -f
+```
 
-1. Setup the environment:
+To stop services:
+```bash
+docker-compose down
+```
+
+### Development Mode
+
+1. Setup the development environment:
 ```bash
 chmod +x dev_setup.sh
 ./dev_setup.sh
@@ -75,8 +86,25 @@ object-detection-service/
 │   │   ├── js/
 │   │   └── uploads/        # Uploaded images
 │   └── templates/          # HTML templates
-└── docker-compose.yml      # Docker composition
+├── docker-compose.yml      # Docker composition
+├── start_prod.sh          # Production startup script
+└── dev_setup.sh          # Development setup script
 ```
+
+## Deployment Modes
+
+### Production Mode
+- Uses Gunicorn WSGI server
+- Multiple worker processes
+- Runs as a background service
+- Proper signal handling
+- Production-grade logging
+
+### Development Mode
+- Uses Flask development server
+- Debug mode enabled
+- Auto-reloading
+- Detailed error pages
 
 ## API Endpoints
 
@@ -88,16 +116,7 @@ object-detection-service/
 - `POST /detect`: Process image and return detections
 - `GET /images/<filename>`: Retrieve processed images
 
-## Development
-
-### Clean Up
-To clean temporary files and caches:
-```bash
-chmod +x cleanup.sh
-./cleanup.sh
-```
-
-### Environment Variables
+## Environment Variables
 - UI Service:
   - `FLASK_ENV`: Development/Production mode
   - `AI_SERVICE_URL`: AI service endpoint
@@ -130,6 +149,16 @@ chmod 777 ai-service/uploads
 docker-compose down
 docker system prune -f
 docker-compose up --build
+```
+
+4. Logs not showing:
+```bash
+# View real-time logs
+docker-compose logs -f
+
+# View specific service logs
+docker-compose logs -f ui-service
+docker-compose logs -f ai-service
 ```
 
 ## Contributing
