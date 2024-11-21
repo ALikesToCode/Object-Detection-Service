@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Detection Service</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Object Detection Service</h1>
+        
+        <div class="upload-section">
+            <form id="upload-form">
+                <div class="upload-zone" id="drop-zone">
+                    <input type="file" id="image-input" accept="image/*" required>
+                    <p>Drag & drop an image or click to select</p>
+                </div>
+                <div id="preview-container" class="preview-container" style="display: none;">
+                    <div class="image-wrapper">
+                        <img id="preview-image" src="" alt="Preview" loading="lazy">
+                        <div class="image-controls">
+                            <button class="fullscreen-btn" data-image="preview">Fullscreen</button>
+                        </div>
+                    </div>
+                    <button type="button" id="change-image" class="secondary-button">Change Image</button>
+                </div>
+                <button type="submit" id="detect-button">Detect Objects</button>
+            </form>
+        </div>
+
+        <div id="loading" class="loading-container" style="display: none;">
+            <div class="spinner"></div>
+            <p>Processing image...</p>
+        </div>
+
+        <div id="results" class="results-section" style="display: none;">
+            <div class="results-grid">
+                <div class="image-container">
+                    <h3>Detection Result</h3>
+                    <div class="image-wrapper">
+                        <img id="result-image" src="" alt="Detection Result" loading="lazy">
+                        <div class="image-controls">
+                            <button class="fullscreen-btn" data-image="result">Fullscreen</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="detection-results">
+                    <h3>Detected Objects</h3>
+                    <pre id="json-results"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="fullscreen-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="download-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                </button>
+                <button class="close-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <img id="modal-image" src="" alt="Fullscreen Image">
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 

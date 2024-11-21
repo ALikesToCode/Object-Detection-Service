@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  ui-service:
+    build: ./ui-service
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./ui-service:/app
+      - shared_uploads:/app/static/uploads:rw
+    networks:
+      - detection_network
+    depends_on:
+      - ai-service
+    environment:
+      - AI_SERVICE_URL=http://ai-service:5001
+
+  ai-service:
+    build: ./ai-service
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./ai-service:/app
+      - shared_uploads:/app/uploads:rw
+    networks:
+      - detection_network
+
+networks:
+  detection_network:
+    driver: bridge
+
+volumes:
+  shared_uploads:
+    driver: local
