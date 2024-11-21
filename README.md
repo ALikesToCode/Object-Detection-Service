@@ -25,8 +25,8 @@ A modern microservice-based object detection system using YOLOv8 and Flask. The 
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd object-detection-service
+git clone [[<repository-url>](https://github.com/ALikesToCode/Object-Detection-Service-AIMONK)](https://github.com/ALikesToCode/Object-Detection-Service-AIMONK/)
+cd Object-Detection-Service-AIMONK
 ```
 
 2. Build and run services:
